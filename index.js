@@ -1,9 +1,11 @@
+chrome.storage.sync.set({activ: false});
+
 actived.addEventListener("click", async () => {
-    activ = document.getElementById("actived");
-    if (activ.value == 'false'){
-        activ.value = 'true';
-        alert("true");
-    }
-    else 
-        activ.value = 'false';
+    chrome.storage.sync.get(['activ'], function(result) {
+        if (result.activ == false){
+            chrome.storage.sync.set({activ: true});
+        } else {
+            chrome.storage.sync.set({activ: false});
+        }
+    });
 })
