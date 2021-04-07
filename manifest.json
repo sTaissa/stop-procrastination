@@ -6,5 +6,16 @@
     "author": "Taissa Caroline da Silva",
     "action": {
         "default_popup": "index.html"
-    }
+    },
+    "permissions": [
+        "tabs",
+        "declarativeContent"
+    ],
+    "background": {
+        "service.worker": ["background.js"]
+    },
+    "content_scripts": [ {
+        "js": ["jquery.js", "index.js"],
+        "matches": ["*://www.facebook.com/*"]
+    } ]
 }
