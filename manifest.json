@@ -4,10 +4,17 @@
     "name": "Stop Procrastinate",
     "description": "Chrome extension - sTaissa",
     "author": "Taissa Caroline da Silva",
+    
     "action": {
         "default_popup": "index.html"
-    },
+    }, 
     "permissions": [
+        "activeTab",
+        "tabs",
+        "scripting",
         "storage"
-    ]
+    ],
+    "background": {
+        "service_worker": "background.js"
+    }
 }
