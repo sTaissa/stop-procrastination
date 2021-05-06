@@ -1,17 +1,11 @@
-butActived.addEventListener("click", function(){
-    if (butActived.value == 'true') {
-        butActived.value = false;
-    } else {
-        butActived.value = true;
-    }
-})
+chrome.storage.sync.set({activ: false});
 
-//dispara changeButton sempre que o valor deste é alterado
-var observer = new MutationObserver( changeButton);
-var config = {attributes: true }; //mudanças a serem oservadas(atributos no caso)
-  
-function changeButton(mutations) {
-    console.log( mutations );
-}
-  
-observer.observe(butActived, config);
+actived.addEventListener("click", async () => {
+    chrome.storage.sync.get(['activ'], function(result) {
+        if (result.activ == false){
+            chrome.storage.sync.set({activ: true});
+        } else {
+            chrome.storage.sync.set({activ: false});
+        }
+    });
+})
