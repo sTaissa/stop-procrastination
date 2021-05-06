@@ -9,3 +9,11 @@ butActived.addEventListener("click", async () => {
         }
     });
 })
+
+var sites = ["facebook", "instagram"];
+var list = document.querySelector('#listSites');
+for (let i = 0; i < sites.length; i++) {
+    let li = document.createElement('li');
+    li.appendChild(document.createTextNode(sites[i]));
+    list.appendChild(li);
+}

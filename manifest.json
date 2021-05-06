@@ -6,7 +6,7 @@
     "author": "Taissa Caroline da Silva",
     
     "action": {
-        "default_popup": "index.html"
+        "default_popup": "popup.html"
     }, 
     "permissions": [
         "activeTab",
