@@ -1,8 +1,17 @@
 <!DOCTYPE html>
     <html>
         <body>
-            <button id="butActived"></button>
-            <ul id="listSites"></ul>
+            <div id='div-sites'>
+                <button id="but-actived"></button>
+                <ul id="list-sites"></ul>
+                <button id="but-add">Add</button>
+            </div>
+            <div id="div-add" style="display: none;">
+                <form id="form-add">
+                    <input type="text" name="site" placeholder="site" autocomplete="off">
+                    <button type="submit" id="but-submit">Submit</button>
+                </form>
+            </div>
         </body>
         <script src="popup.js"></script>
     </html>
