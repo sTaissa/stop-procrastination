@@ -1,10 +1,24 @@
 //events
-document.querySelector("#but-add").addEventListener("click", hide);
-document.querySelector("#but-submit").addEventListener("click", hide);
+document.querySelector("#but-actived").addEventListener("click", actives);
 
-//arrumar esse como um evento e funcao separada em outro commit
-document.querySelector("#but-actived").addEventListener("click", function() {
-    chrome.storage.sync.get(['activ'], function(result) {
+let el = document.querySelectorAll("button");
+for (i = 0; i < el.length; i++) {
+    el[i].addEventListener("click", function(){
+        hide(this.id);
+    });
+}
+
+var sites = ["facebook", "instagram"];
+var list = document.querySelector('#list-sites');
+for (let i = 0; i < sites.length; i++) {
+    let li = document.createElement('li');
+    li.appendChild(document.createTextNode(sites[i]));
+    list.appendChild(li);
+}
+
+//changes the storage value 
+function actives(){
+    chrome.storage.sync.get(['activ'], function(result){
         if (result.activ == false){
             chrome.storage.sync.set({activ: true});
             console.log(result.activ);
@@ -13,14 +27,6 @@ document.querySelector("#but-actived").addEventListener("click", function() {
             console.log(result.activ);
         }
     });
-})
-
-var sites = ["facebook", "instagram"];
-var list = document.querySelector('#list-sites');
-for (let i = 0; i < sites.length; i++) {
-    let li = document.createElement('li');
-    li.appendChild(document.createTextNode(sites[i]));
-    list.appendChild(li);
 }
 
 //add a new site to the list
@@ -43,18 +49,26 @@ function addLine(newSite){
     document.querySelector("#list-sites").appendChild(listEl);
 }
 
-//allows the add sites div to appear and hide
-function hide(){
+//allows the add sites div and personalize sites div to appear and hide
+function hide(butId){
+    let divDefault = document.querySelector("#div-default");
     let divSites = document.querySelector("#div-sites");
     let divAdd = document.querySelector("#div-add");
-    let displaySites = divSites.style.display;
 
-    if(displaySites == 'none') {
-        add(event);
-        divSites.style.display = 'block';
-        divAdd.style.display = 'none';
-    } else {
+    if(butId == "but-add"){
         divSites.style.display = 'none';
         divAdd.style.display = 'block';
+        divDefault.style.display = 'none';
+    } else if(butId == "but-apply"){
+        divSites.style.display = 'none';
+        divAdd.style.display = 'none';
+        divDefault.style.display = 'block';
+    } else if(butId == "but-default" || butId == "but-submit"){
+        if(butId == "but-submit"){
+            add(event);
+        }
+        divSites.style.display = 'block';
+        divAdd.style.display = 'none';
+        divDefault.style.display = 'none';
     }
 }

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
     <html>
         <body>
-            <div id='div-sites'>
+            <div id='div-default'>
                 <button id="but-actived"></button>
                 <ul id="list-sites"></ul>
-                <button id="but-add">Add</button>
+                <button id="but-default">Personalize</button>
             </div>
             <div id="div-add" style="display: none;">
                 <form id="form-add">
                     <input type="text" name="site" placeholder="site" autocomplete="off">
                     <button type="submit" id="but-submit">Submit</button>
                 </form>
+            </div>
+            <div id="div-sites" style="display: none;">
+                <table id="tab-sites">
+                </table>
+                <button id="but-apply">Apply</button>
+                <button id="but-add">Add</button>
             </div>
         </body>
         <script src="popup.js"></script>
