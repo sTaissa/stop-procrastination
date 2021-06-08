@@ -1,21 +1,22 @@
-//list of sites that user should be "warned"
-var sites = ["facebook", "instagram"];
-
 //set the button in "idle mode" initially
 chrome.storage.sync.set({activ: false});
 
 //function to check if the current tab is part of the list of sites
 function match(url, tabId){
-    for (i in sites) {
-        if (url.includes(sites[i])) {
-          //if true, run the script that displays an alert
-          chrome.scripting.executeScript({
-            target: {tabId: tabId},
-            function: message
-          });
-          break;
-        } 
-    } 
+  chrome.storage.sync.get(['sites'], function(result){
+    for (i in result.sites){
+      console.log(result.sites[i]);
+      if (url.includes(result.sites[i])) {
+        console.log("foi");
+        //if true, run the script that displays an alert
+        chrome.scripting.executeScript({
+          target: {tabId: tabId},
+          function: message
+        });
+        break;
+      }
+    }
+  });
 }
 
 function message() {

@@ -21,7 +21,7 @@ chrome.storage.sync.get(['sites'], function(result){
 //initial display of sites in table and list
 function initialDisplay(){
     chrome.storage.sync.get(['sites'], function(result){
-        for (let i = 0; i < result.sites.length; i++) {
+        for (i in result.sites) {
             addLineList(result.sites[i]);
             addLineTable(result.sites[i]);
         }
@@ -97,7 +97,7 @@ function hide(butId){
         divSites.style.display = 'none';
         divAdd.style.display = 'none';
         divDefault.style.display = 'block';
-    } else if(butId == "but-default" || butId == "but-submit"){
+    } else if(butId == "but-default" || butId == "but-submit" || butId == "but-back"){
         if(butId == "but-submit"){
             add(event);
         }
