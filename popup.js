@@ -1,5 +1,5 @@
 //events
-document.querySelector("#but-actived").addEventListener("click", actives);
+document.querySelector("#but-actived").addEventListener("click", active);
 
 let el = document.querySelectorAll("button");
 for (i = 0; i < el.length; i++) {
@@ -8,16 +8,28 @@ for (i = 0; i < el.length; i++) {
     });
 }
 
-var sites = ["facebook", "instagram"];
-var list = document.querySelector('#list-sites');
-for (let i = 0; i < sites.length; i++) {
-    let li = document.createElement('li');
-    li.appendChild(document.createTextNode(sites[i]));
-    list.appendChild(li);
+//initial values
+chrome.storage.sync.get(['sites'], function(result){
+    if (!result.sites){
+        var site = ["facebook", "instagram"];
+        chrome.storage.sync.set({sites: site});
+    }  
+    initialDisplay();
+});
+
+
+//initial display of sites in table and list
+function initialDisplay(){
+    chrome.storage.sync.get(['sites'], function(result){
+        for (let i = 0; i < result.sites.length; i++) {
+            addLineList(result.sites[i]);
+            addLineTable(result.sites[i]);
+        }
+    });
 }
 
-//changes the storage value 
-function actives(){
+//changes the storage value to active 
+function active(){
     chrome.storage.sync.get(['activ'], function(result){
         if (result.activ == false){
             chrome.storage.sync.set({activ: true});
@@ -29,24 +41,46 @@ function actives(){
     });
 }
 
-//add a new site to the list
+//add a new site 
 function add(event){
     event.preventDefault();//doesn't allow page to reload after form submission as default
 
     let form = document.querySelector("#form-add");
-    formSite = form.site.value;
+    formSite = form.site.value.toLowerCase();
 
-    addLine(formSite);
+    addLineList(formSite);
+    addLineTable(formSite);
+    store(formSite);
+
     form.reset();
 }
 
 //create a new line in the list
-function addLine(newSite){
-    let listEl = document.createElement("li");
+function addLineList(newSite){ 
+    let li = document.createElement("li");
+    li.textContent = newSite;
+    document.querySelector("#list-sites").appendChild(li);
+}
 
-    listEl.textContent = newSite;
+//create a new line in the table
+function addLineTable(newSite){
+    let tr = document.createElement("tr");
+    let td = document.createElement("td");
+    td.textContent = newSite;
+    tr.appendChild(td);
+    document.querySelector("#tab-sites").appendChild(tr);
+}
 
-    document.querySelector("#list-sites").appendChild(listEl);
+//store the new site in chrome storage
+function store(newSite){
+    chrome.storage.sync.get(['sites'], function(result){
+        var arrSites = [];
+        for (i = 0; i < result.sites.length; i++){
+            arrSites.push(result.sites[i]);
+        }
+        arrSites.push(newSite);
+        chrome.storage.sync.set({sites: arrSites});
+    });
 }
 
 //allows the add sites div and personalize sites div to appear and hide
