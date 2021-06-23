@@ -5,9 +5,7 @@ chrome.storage.sync.set({activ: false});
 function match(url, tabId){
   chrome.storage.sync.get(['sites'], function(result){
     for (i in result.sites){
-      console.log(result.sites[i]);
       if (url.includes(result.sites[i])) {
-        console.log("foi");
         //if true, run the script that displays an alert
         chrome.scripting.executeScript({
           target: {tabId: tabId},
@@ -35,15 +33,18 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 }); 
 
 //when a tab is activated
-chrome.tabs.onActivated.addListener(function(activeInfo) {
-  //get the info(inclunding url) of activated tab
-  chrome.tabs.get(activeInfo.tabId, function(tab){
-    //get the button mode
-    chrome.storage.sync.get(['activ'], function(result) {
-      //if its active and tab has a url, call match function
-      if (result.activ == true && tab.url != undefined) {
-        match(tab.url, tab.id);
-      }
-    });
+chrome.tabs.onActivated.addListener(function() {
+  chrome.storage.sync.get(['activ'], function(result) {
+    //if the button is active, call match function
+    if (result.activ == true){
+      //this time is to avoid a devtool bug
+      setTimeout(function() {
+        chrome.tabs.query({"active": true, "lastFocusedWindow": true}, function (tabs) {
+          tabURL = tabs[0].url;
+          tabID = tabs[0].id;
+          match(tabURL, tabID);
+        });
+      }, 500);
+    } 
   });
 });
