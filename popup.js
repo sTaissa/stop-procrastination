@@ -5,6 +5,7 @@ let el = document.querySelectorAll("button");
 for (i = 0; i < el.length; i++) {
     el[i].addEventListener("click", function(){
         hide(this.id);
+        delet();
     });
 }
 
@@ -16,7 +17,6 @@ chrome.storage.sync.get(['sites'], function(result){
     }  
     initialDisplay();
 });
-
 
 //initial display of sites in table and list
 function initialDisplay(){
@@ -50,35 +50,80 @@ function add(event){
 
     addLineList(formSite);
     addLineTable(formSite);
-    store(formSite);
+    store(formSite, "add");
 
     form.reset();
 }
 
 //create a new line in the list
-function addLineList(newSite){ 
+function addLineList(site){ 
     let li = document.createElement("li");
-    li.textContent = newSite;
+    li.textContent = site;
     document.querySelector("#list-sites").appendChild(li);
 }
 
 //create a new line in the table
-function addLineTable(newSite){
+function addLineTable(site){
     let tr = document.createElement("tr");
     let td = document.createElement("td");
-    td.textContent = newSite;
+    let del = document.createElement("td");
+    let but = document.createElement("button");
+    
+    td.textContent = site;
+    but.textContent = "Delete";
+    del.className = "delete";
+
     tr.appendChild(td);
+    del.appendChild(but);
+    tr.appendChild(del);
+
     document.querySelector("#tab-sites").appendChild(tr);
 }
 
-//store the new site in chrome storage
-function store(newSite){
+//delete sites from table
+function delet(){
+    let table = document.querySelectorAll(".delete");
+    let list = document.querySelectorAll("li");
+    for (i = 0; i < table.length; i++) {
+        table[i].addEventListener("click", function() {
+            let tr = this.parentNode;
+            var site = tr.children[0].textContent;
+            
+            //deleting from table
+            this.parentNode.remove();
+
+            //deleting from list
+            for(i = 0; i < list.length; i++){
+                if(list[i].textContent == site){
+                    list[i].remove();
+                }
+            }
+
+            store(site, "del");
+        });
+    }
+}
+
+//changes the storage
+function store(site, action){
+    //get the sites in an array
     chrome.storage.sync.get(['sites'], function(result){
         var arrSites = [];
         for (i = 0; i < result.sites.length; i++){
             arrSites.push(result.sites[i]);
         }
-        arrSites.push(newSite);
+    
+        //add or delete the site, depending on specified action
+        if(action == "add"){
+            arrSites.push(site);
+        } else if(action == "del"){
+            siteID = arrSites.indexOf(site);
+            if(siteID > -1){//if the information is not found it returns -1
+                arrSites.splice(siteID, 1);
+            }
+        }
+
+        //add the new array to storage
         chrome.storage.sync.set({sites: arrSites});
     });
 }
