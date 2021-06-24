@@ -5,7 +5,6 @@ let el = document.querySelectorAll("button");
 for (i = 0; i < el.length; i++) {
     el[i].addEventListener("click", function(){
         hide(this.id);
-        delet();
     });
 }
 
@@ -67,20 +66,26 @@ function addLineTable(site){
     let tr = document.createElement("tr");
     let td = document.createElement("td");
     let del = document.createElement("td");
-    let but = document.createElement("button");
+    let butDel = document.createElement("button");
+    let edit = document.createElement("td");
+    let butEdit = document.createElement("button");
     
     td.textContent = site;
-    but.textContent = "Delete";
+    butDel.textContent = "Delete";
     del.className = "delete";
+    butEdit.textContent = "Edit";
+    edit.className = "edit";
 
     tr.appendChild(td);
-    del.appendChild(but);
+    del.appendChild(butDel);
+    edit.appendChild(butEdit);
     tr.appendChild(del);
+    tr.appendChild(edit);
 
     document.querySelector("#tab-sites").appendChild(tr);
 }
 
-//delete sites from table
+//delete the sites
 function delet(){
     let table = document.querySelectorAll(".delete");
     let list = document.querySelectorAll("li");
@@ -104,8 +109,50 @@ function delet(){
     }
 }
 
+//edit the sites
+function edit(){
+    let table = document.querySelectorAll(".edit");
+    let list = document.querySelectorAll("li");
+    for (i = 0; i < table.length; i++) {
+        table[i].addEventListener("click", function() { //fazer funcao separada, para permitir editar se der duplo clique ou no botao
+            let tr = this.parentNode;
+            var oldSite = tr.children[0].textContent;
+            let td = tr.children[0];
+            let input = document.createElement("input");
+
+            input.type = "text";
+            input.value = oldSite;
+            td.textContent = "";
+            td.appendChild(input);
+            td.children[0].focus();
+
+            //when enter is clicked
+            td.addEventListener("keypress", function(e){
+                //enter is rated 13
+                if(e.which == 13){
+                    //editing from table
+                    let newSite = this.children[0].value; //"this" refers to the td that contains the input in this scope
+                    this.textContent = newSite;
+
+                    //editing from list
+                    for(i = 0; i < list.length; i++){
+                        if(list[i].textContent == oldSite){
+                            list[i].outerHTML = "<li>" + newSite + "</li>";
+                        }
+                    }
+                    store(oldSite, "edit", newSite);
+                }
+            });
+
+            td.children[0].addEventListener("blur", function(){
+                this.parentNode.textContent = oldSite;
+            });
+        });
+    }
+}
+
 //changes the storage
-function store(site, action){
+function store(site, action, newSite){
     //get the sites in an array
     chrome.storage.sync.get(['sites'], function(result){
         var arrSites = [];
@@ -116,10 +163,14 @@ function store(site, action){
         //add or delete the site, depending on specified action
         if(action == "add"){
             arrSites.push(site);
-        } else if(action == "del"){
+        } else{
             siteID = arrSites.indexOf(site);
             if(siteID > -1){//if the information is not found it returns -1
-                arrSites.splice(siteID, 1);
+                if(action == "del"){
+                    arrSites.splice(siteID, 1);
+                } else if(action == "edit"){
+                    arrSites.splice(siteID, 1, newSite);
+                }
             }
         }
 
@@ -134,14 +185,17 @@ function hide(butId){
     let divSites = document.querySelector("#div-sites");
     let divAdd = document.querySelector("#div-add");
 
+    //appear add screen
     if(butId == "but-add"){
         divSites.style.display = 'none';
         divAdd.style.display = 'block';
         divDefault.style.display = 'none';
+    //appear initial screen (list)
     } else if(butId == "but-apply"){
         divSites.style.display = 'none';
         divAdd.style.display = 'none';
         divDefault.style.display = 'block';
+    //appear table screen
     } else if(butId == "but-default" || butId == "but-submit" || butId == "but-back"){
         if(butId == "but-submit"){
             add(event);
@@ -149,5 +203,7 @@ function hide(butId){
         divSites.style.display = 'block';
         divAdd.style.display = 'none';
         divDefault.style.display = 'none';
+        delet();
+        edit();
     }
 }
