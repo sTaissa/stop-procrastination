@@ -71,6 +71,7 @@ function addLineTable(site){
     let butEdit = document.createElement("button");
     
     td.textContent = site;
+    td.className = "site";
     butDel.textContent = "Delete";
     del.className = "delete";
     butEdit.textContent = "Edit";
@@ -111,44 +112,59 @@ function delet(){
 
 //edit the sites
 function edit(){
+    //when edit button in clicked
     let table = document.querySelectorAll(".edit");
-    let list = document.querySelectorAll("li");
     for (i = 0; i < table.length; i++) {
-        table[i].addEventListener("click", function() { //fazer funcao separada, para permitir editar se der duplo clique ou no botao
-            let tr = this.parentNode;
-            var oldSite = tr.children[0].textContent;
-            let td = tr.children[0];
-            let input = document.createElement("input");
-
-            input.type = "text";
-            input.value = oldSite;
-            td.textContent = "";
-            td.appendChild(input);
-            td.children[0].focus();
-
-            //when enter is clicked
-            td.addEventListener("keypress", function(e){
-                //enter is rated 13
-                if(e.which == 13){
-                    //editing from table
-                    let newSite = this.children[0].value; //"this" refers to the td that contains the input in this scope
-                    this.textContent = newSite;
-
-                    //editing from list
-                    for(i = 0; i < list.length; i++){
-                        if(list[i].textContent == oldSite){
-                            list[i].outerHTML = "<li>" + newSite + "</li>";
-                        }
-                    }
-                    store(oldSite, "edit", newSite);
-                }
-            });
-
-            td.children[0].addEventListener("blur", function(){
-                this.parentNode.textContent = oldSite;
-            });
+        table[i].addEventListener("click", function() {
+            editLine(this);
         });
     }
+
+    //when clicking on the site you want to edit
+    let el = document.querySelectorAll("td");
+    for (i = 0; i < el.length; i++) {
+        el[i].addEventListener("click", function(event){
+            console.log("foi");
+            editLine(this);
+        });
+    }
+}
+
+function editLine(click){
+    let tr = click.parentNode;
+    var oldSite = tr.children[0].textContent;
+    let td = tr.children[0];
+    let input = document.createElement("input");
+
+    input.type = "text";
+    input.value = oldSite;
+    td.textContent = "";
+    td.appendChild(input);
+    td.children[0].focus();
+
+    //when enter is clicked (save)
+    td.addEventListener("keypress", function(e){
+        //enter is rated 13
+        if(e.which == 13){
+            //editing from table
+            let newSite = this.children[0].value; //"this" refers to the td that contains the input in this scope
+            this.textContent = newSite;
+
+            //editing from list
+            let list = document.querySelectorAll("li");
+            for(i = 0; i < list.length; i++){
+                if(list[i].textContent == oldSite){
+                    list[i].outerHTML = "<li>" + newSite + "</li>";
+                }
+            }
+            store(oldSite, "edit", newSite);
+        }
+    });
+
+    //when exiting the input without saving
+    td.children[0].addEventListener("blur", function(){
+        this.parentNode.textContent = oldSite;
+    });
 }
 
 //changes the storage
