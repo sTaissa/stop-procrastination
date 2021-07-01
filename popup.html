@@ -1,24 +1,28 @@
 <!DOCTYPE html>
     <html>
         <body>
+            <header>
+                <h1>Stop Procrastinate!</h1>
+            </header>
             <div id='div-default'>
-                <button id="but-actived"></button>
+                <button id="but-actived">On</button>
                 <ul id="list-sites"></ul>
-                <button id="but-default">Personalize</button>
+                <button id="but-default" class="red">Personalize</button>
             </div>
             <div id="div-add" style="display: none;">
                 <form id="form-add">
                     <input type="text" name="site" placeholder="site" autocomplete="off">
-                    <button type="submit" id="but-submit">Submit</button>
-                    <button id="but-back">Back</button>
+                    <button type="submit" id="but-submit" class="red">Submit</button>
+                    <button id="but-back" class="red">Back</button>
                 </form>
             </div>
             <div id="div-sites" style="display: none;">
                 <table id="tab-sites">
                 </table>
-                <button id="but-apply">Apply</button>
-                <button id="but-add">Add</button>
+                <button id="but-apply" class="red">Apply</button>
+                <button id="but-add" class="red">Add</button>
             </div>
         </body>
         <script src="popup.js"></script>
+        <link rel="stylesheet" type="text/css" href="popup.css">
     </html>

@@ -73,8 +73,10 @@ function addLineTable(site){
     td.textContent = site;
     td.className = "site";
     butDel.textContent = "Delete";
+    butDel.className = "gray";
     del.className = "delete";
     butEdit.textContent = "Edit";
+    butEdit.className = "gray";
     edit.className = "edit";
 
     tr.appendChild(td);
@@ -213,6 +215,7 @@ function hide(butId){
         divAdd.style.display = 'none';
         divDefault.style.display = 'block';
     //appear table screen
+    //NAO VOLTA NA TELA CERTA QUANDO CLICAK EM BACK E NAO DELETA NEM EDITA O SITE RECEM ADICIONADO SE NAO TROCAR DE TELA ANTES
     } else if(butId == "but-default" || butId == "but-submit" || butId == "but-back"){
         if(butId == "but-submit"){
             add(event);

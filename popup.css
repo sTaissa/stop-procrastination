@@ -1,0 +1,23 @@
+html{
+    background-color: rgb(77, 77, 77);
+    color: white;
+}
+
+.red{
+    background-color: red;
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    padding: 4vw;
+}
+
+.gray{
+    background-color: rgb(150, 150, 150);
+    border-radius: 5px;
+    border-style: none;
+}
+
+.red:hover, .gray:hover{
+    box-shadow: 1px 1px 5px black;
+    cursor: pointer;
+}
