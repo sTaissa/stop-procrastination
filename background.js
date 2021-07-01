@@ -1,5 +1,7 @@
 //set the button in "idle mode" initially
-chrome.storage.sync.set({activ: false});
+chrome.runtime.onInstalled.addListener(function(){
+  chrome.storage.sync.set({activ: false});
+})
 
 //function to check if the current tab is part of the list of sites
 function match(url, tabId){

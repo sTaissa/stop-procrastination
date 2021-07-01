@@ -123,10 +123,11 @@ function edit(){
     //when clicking on the site you want to edit
     let el = document.querySelectorAll("td");
     for (i = 0; i < el.length; i++) {
-        el[i].addEventListener("click", function(event){
-            console.log("foi");
-            editLine(this);
-        });
+        if(el[i].className == "site"){
+            el[i].addEventListener("click", function(event){
+                editLine(this);
+            });
+        }   
     }
 }
 
