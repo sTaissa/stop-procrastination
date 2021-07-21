@@ -17,27 +17,55 @@ chrome.storage.sync.get(['sites'], function(result){
     initialDisplay();
 });
 
-//initial display of sites in table and list
+//initial display, before modifications
 function initialDisplay(){
+    //table
     chrome.storage.sync.get(['sites'], function(result){
         for (i in result.sites) {
-            addLineList(result.sites[i]);
             addLineTable(result.sites[i]);
+        }
+    });
+
+    //div-default
+    chrome.storage.sync.get(['activ'], function(result){
+        styleActive(result.activ);
+    });
+}
+
+function active(){
+    chrome.storage.sync.get(['activ'], function(result){
+        if(result.activ == false){
+            chrome.storage.sync.set({activ: true});
+            console.log("era: " + result.activ);
+            styleActive(true);
+        } else {
+            chrome.storage.sync.set({activ: false});
+            console.log("era: " + result.activ);
+            styleActive(false);
         }
     });
 }
 
-//changes the storage value to active 
-function active(){
-    chrome.storage.sync.get(['activ'], function(result){
-        if (result.activ == false){
-            chrome.storage.sync.set({activ: true});
-            console.log(result.activ);
-        } else {
-            chrome.storage.sync.set({activ: false});
-            console.log(result.activ);
-        }
-    });
+//changes the div-default style when the button is turned on or off 
+function styleActive(activ){
+    console.log("style");
+    img = document.querySelector("#but-actived");
+    pSites = document.querySelector("#p-sites");
+    pActived = document.querySelector("#p-actived");
+
+    if (activ == true){
+        //style when turned on
+        img.src = "images/on.png";
+        pActived.textContent = "Click the button to turn off the extension";
+        pSites.textContent = "Blocked sites";
+        console.log("on");
+    } else {
+        //style when turned off
+        img.src = "images/off.png";
+        pActived.textContent = "Click the button to turn on the extension";
+        pSites.textContent = "Sites to block";
+        console.log("off");
+    }
 }
 
 //add a new site 
@@ -47,18 +75,10 @@ function add(event){
     let form = document.querySelector("#form-add");
     formSite = form.site.value.toLowerCase();
 
-    addLineList(formSite);
     addLineTable(formSite);
     store(formSite, "add");
 
     form.reset();
-}
-
-//create a new line in the list
-function addLineList(site){ 
-    let li = document.createElement("li");
-    li.textContent = site;
-    document.querySelector("#list-sites").appendChild(li);
 }
 
 //create a new line in the table
@@ -91,7 +111,6 @@ function addLineTable(site){
 //delete the sites
 function delet(){
     let table = document.querySelectorAll(".delete");
-    let list = document.querySelectorAll("li");
     for (i = 0; i < table.length; i++) {
         table[i].addEventListener("click", function() {
             let tr = this.parentNode;
@@ -99,13 +118,6 @@ function delet(){
             
             //deleting from table
             this.parentNode.remove();
-
-            //deleting from list
-            for(i = 0; i < list.length; i++){
-                if(list[i].textContent == site){
-                    list[i].remove();
-                }
-            }
 
             store(site, "del");
         });
@@ -153,13 +165,6 @@ function editLine(click){
             let newSite = this.children[0].value; //"this" refers to the td that contains the input in this scope
             this.textContent = newSite;
 
-            //editing from list
-            let list = document.querySelectorAll("li");
-            for(i = 0; i < list.length; i++){
-                if(list[i].textContent == oldSite){
-                    list[i].outerHTML = "<li>" + newSite + "</li>";
-                }
-            }
             store(oldSite, "edit", newSite);
         }
     });
@@ -207,20 +212,20 @@ function hide(butId){
     //appear add screen
     if(butId == "but-add"){
         divSites.style.display = 'none';
-        divAdd.style.display = 'block';
+        divAdd.style.display = 'flex';
         divDefault.style.display = 'none';
     //appear initial screen (list)
     } else if(butId == "but-apply"){
         divSites.style.display = 'none';
         divAdd.style.display = 'none';
-        divDefault.style.display = 'block';
+        divDefault.style.display = 'flex';
     //appear table screen
     //NAO VOLTA NA TELA CERTA QUANDO CLICAK EM BACK E NAO DELETA NEM EDITA O SITE RECEM ADICIONADO SE NAO TROCAR DE TELA ANTES
     } else if(butId == "but-default" || butId == "but-submit" || butId == "but-back"){
         if(butId == "but-submit"){
             add(event);
         }
-        divSites.style.display = 'block';
+        divSites.style.display = 'flex';
         divAdd.style.display = 'none';
         divDefault.style.display = 'none';
         delet();
