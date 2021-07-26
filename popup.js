@@ -37,9 +37,12 @@ function active(){
         if(result.activ == false){
             chrome.storage.sync.set({activ: true});
             styleActive(true);
+            chrome.action.setBadgeText({text: 'ON'});
+            chrome.action.setBadgeBackgroundColor({color: 'red'});
         } else {
             chrome.storage.sync.set({activ: false});
             styleActive(false);
+            chrome.action.setBadgeText({text: ''});
         }
     });
 }

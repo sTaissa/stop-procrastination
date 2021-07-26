@@ -3,10 +3,16 @@
     "version": "1.0",
     "name": "Stop Procrastinate",
     "description": "Chrome extension - sTaissa",
-    "author": "Taissa Caroline da Silva",
+    "author": "Taissa Silva",
     
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon16.png",
+            "24": "images/icon24.png",
+            "32": "images/icon32.png"
+        },
+        "default_title": "Stop Procrastinate"
     }, 
     "permissions": [
         "activeTab",
