@@ -84,22 +84,23 @@ function addLineTable(site){
     let tr = document.createElement("tr");
     let td = document.createElement("td");
     let del = document.createElement("td");
-    let butDel = document.createElement("button");
     let edit = document.createElement("td");
-    let butEdit = document.createElement("button");
+    let imgDel = document.createElement("img");
+    let imgEdit = document.createElement("img");
     
     td.textContent = site;
     td.className = "site";
-    butDel.textContent = "Delete";
-    butDel.className = "gray";
     del.className = "delete";
-    butEdit.textContent = "Edit";
-    butEdit.className = "gray";
     edit.className = "edit";
 
+    imgDel.src = "images/delete.png";
+    imgDel.style.height = "5vw";
+    imgEdit.style.height = "5vw";
+    imgEdit.src = "images/edit.png";
+
     tr.appendChild(td);
-    del.appendChild(butDel);
-    edit.appendChild(butEdit);
+    del.appendChild(imgDel);
+    edit.appendChild(imgEdit);
     tr.appendChild(del);
     tr.appendChild(edit);
 
