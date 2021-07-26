@@ -3,15 +3,17 @@ html{
     color: white;
     box-shadow: inset 0 0 4rem rgb(0 0 0 / 50%);
     width: 120vw;
-    height: 150vw;
+    height: 160vw;
 }
 
+/*red buttons*/
 .red{
     background-color: rgb(255, 46, 46);
     color: white;
     border-style: none;
     border-radius: 5px;
     padding: 4vw;
+    box-shadow: 1px 1px 3px rgb(27, 27, 27);
 }
 
 .gray{
@@ -22,6 +24,10 @@ html{
 
 #but-actived{
     cursor: pointer;
+}
+
+#p-img{
+    border-radius: 100px;
 }
 
 #p-sites{
@@ -41,7 +47,20 @@ header{
     align-items: center;
 }
 
+/*animations*/
 .red:hover, .gray:hover{
     box-shadow: 1px 1px 5px black;
     cursor: pointer;
+}
+
+@keyframes shadowOn {
+    0%{
+        box-shadow: none;
+    }   
+    50%{
+        box-shadow: 0 0 10vw 1.5vw rgb(29, 28, 28);
+    } 
+    100%{
+        box-shadow: none;
+    }
 }

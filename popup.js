@@ -36,11 +36,9 @@ function active(){
     chrome.storage.sync.get(['activ'], function(result){
         if(result.activ == false){
             chrome.storage.sync.set({activ: true});
-            console.log("era: " + result.activ);
             styleActive(true);
         } else {
             chrome.storage.sync.set({activ: false});
-            console.log("era: " + result.activ);
             styleActive(false);
         }
     });
@@ -48,23 +46,23 @@ function active(){
 
 //changes the div-default style when the button is turned on or off 
 function styleActive(activ){
-    console.log("style");
     img = document.querySelector("#but-actived");
     pSites = document.querySelector("#p-sites");
     pActived = document.querySelector("#p-actived");
+    pImg = document.querySelector("#p-img");
 
     if (activ == true){
         //style when turned on
         img.src = "images/on.png";
         pActived.textContent = "Click the button to turn off the extension";
         pSites.textContent = "Blocked sites";
-        console.log("on");
+        pImg.style.animation = "shadowOn 2.5s infinite";
     } else {
         //style when turned off
         img.src = "images/off.png";
         pActived.textContent = "Click the button to turn on the extension";
         pSites.textContent = "Sites to block";
-        console.log("off");
+        pImg.style.animation = "";
     }
 }
 
