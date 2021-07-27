@@ -20,7 +20,7 @@ function match(url, tabId){
 }
 
 function message() {
-    alert("Don't waste time with this, do something more productive!");
+    alert("Stop Procrastinating, do something more productive!\n To stop these messages, disable the extension.");
 }
 
 //when current tab is updated
