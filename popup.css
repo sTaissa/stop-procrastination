@@ -2,10 +2,8 @@ html{
     background-color: rgb(77, 77, 77);
     color: white;
     box-shadow: inset 0 0 4rem rgb(0 0 0 / 50%);
-    width: 120vw;
-    height: 160vw;
-    max-width: 120vw;
-    max-height: 160vw;
+    width: 20rem;
+    height: 27rem;
 }
 
 /*red buttons*/
