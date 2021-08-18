@@ -15,12 +15,16 @@
  <a href="#about">About</a> •
  <a href="#features">Features</a> • 
  <a href="#run">How to run</a> • 
- <a href="#"></a> • 
- <a href="#"></a> • 
- <a href="#"></a>
+ <a href="#author">Author</a> • 
+ <a href="#more">More</a> 
 </p>
 
-<h3 id="#features">✨Features</h3>
+<h1 align="center">
+  <img alt="aa" src="./images/one.gif" height= "300px"/>
+  <img src="./images/two.gif" height= "300px"/>
+</h1>
+
+<h3 id="features">✨Features</h3>
 
  - [x] Customize websites
  - [x] Enable and disable extension
@@ -30,5 +34,21 @@
 <h3 id="run">⚙ How to run</h3>
 <p>Unfortunately, I haven't been able to publish it to the chrome web store yet, so for now you'll have to:</p>
 <ul>
-	<li>...</li>
+	<li>Install the project</li>
+	<li>Go to chrome://extensions/</li>
+	<li>In the upper right corner, turn on Developer Mode</li>
+	<li>Click "load without compression"</li>
+	<li>Find and select the extension folder</li>
 </ul>
+<p>That's it, now you can open it on your own machine as any other extension and edit it in your code editor</p>
+
+<h3 id="more">📌 More</h3>
+<p>This is the link to my explanatory video about the project, required by the course:</p>
+<a href="https://youtu.be/5t_cCtUJYG0">https://youtu.be/5t_cCtUJYG0</a>
+
+<h3 id="author">👩‍💻 Author</h3>
+<img src="./images/me.jpg" height="100px"/>
+<p>Taissa Silva</p>
+
+[![Linkedin Badge](https://img.shields.io/badge/-Taissa-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/taissa-silva-39a4171b5/)](https://www.linkedin.com/in/taissa-silva-39a4171b5/) 
+[![Gmail Badge](https://img.shields.io/badge/-staissa002@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:staissa002@gmail.com)](mailto:staissa002@gmail.com)
